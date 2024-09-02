@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="tripApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Planning </title>
+    <link rel="stylesheet" href="styles3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="trip-planning.js"></script>
+</head>
+<body ng-controller="TripController">
+    <header>
+        <h1>Trip Planning</h1>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1><span class="highlight">PLAN YOUR</span> <br> <span class="highlight">TRIP</span> EFFICIENTLY</h1>
+            <p>Efficiently track and control your travel plans with our intuitive trip management tools. Seamlessly categorize, monitor, and analyze your itinerary to make informed decisions and enjoy a well-organized journey.</p>
+             <div class="tabs">
+            <button class="tab-button active" ng-click="showTab(1)" class="cta-button">Basic Information</button>
+            <button class="tab-button" ng-click="showTab(2)" class="cta-button">Travel Details</button>
+            <button class="tab-button" ng-click="showTab(3)"class="cta-button">Additional Information</button>
+            <button class="tab-button" ng-click="showTab(4)"class="cta-button">Review</button>
+        </div>
+    </section>
+
+        <section id="trip-planning">
+            <form id="trip-form" ng-submit="submitForm()">
+                <!-- Basic Information Tab -->
+                <div class="tab-content" ng-class="{active: currentTab === 1}">
+                    <h3>Basic Information</h3>
+                    <label for="trip-name">Trip Name:</label>
+                    <input type="text" id="trip-name" ng-model="trip.tripName" required>
+                    <br><br>
+                    <label for="destination">Destination:</label>
+                    <input type="text" id="destination" ng-model="trip.destination" required>
+                    <br><br>
+                    <label for="start-date">Start Date:</label>
+                    <input type="date" id="start-date" ng-model="trip.startDate" required>
+                    <br><br>
+                    <label for="end-date">End Date:</label>
+                    <input type="date" id="end-date" ng-model="trip.endDate" required>
+                    <br><br>
+                    <label for="budget">Budget:</label>
+                    <input type="number" id="budget" ng-model="trip.budget" required>
+                    <br><br>
+                    <button type="button" ng-click="nextTab()">Next</button>
+                </div>
+
+                <!-- Travel Details Tab -->
+                <div class="tab-content" ng-class="{active: currentTab === 2}">
+                    <h3>Travel Details</h3>
+                    <label for="transportation">Transportation:</label>
+                    <select id="transportation" ng-model="trip.transportation" required>
+                        <option value="car">Car</option>
+                        <option value="plane">Plane</option>
+                        <option value="train">Train</option>
+                        <option value="bus">Bus</option>
+                    </select>
+                    <br><br>
+                    <label for="accommodation">Accommodation:</label>
+                    <input type="text" id="accommodation" ng-model="trip.accommodation" required>
+                    <br><br>
+                    <label>Meal Preferences:</label>
+                    <input type="radio" id="veg" name="meal" ng-model="trip.meal" value="vegetarian">
+                    <label for="veg">Vegetarian</label>
+                    <input type="radio" id="non-veg" name="meal" ng-model="trip.meal" value="non-vegetarian">
+                    <label for="non-veg">Non-Vegetarian</label>
+                    <br><br>
+                    <label>Travel Insurance:</label>
+                    <input type="checkbox" id="insurance" ng-model="trip.insurance">
+                    <label for="insurance">Opt for Travel Insurance</label>
+                    <br><br>
+                    <button type="button" ng-click="nextTab()">Next</button>
+                </div>
+
+                <!-- Additional Information Tab -->
+                <div class="tab-content" ng-class="{active: currentTab === 3}">
+                    <h3>Additional Information</h3>
+                    <label for="packing">Packing List:</label>
+                    <textarea id="packing" rows="2" ng-model="trip.packing" required></textarea>
+                    <br><br>
+                    <label for="communication">Communication:</label>
+                    <input type="text" id="communication" ng-model="trip.communication" required>
+                    <br><br>
+                    <label for="local-research">Local Research:</label>
+                    <textarea id="local-research" rows="2" ng-model="trip.localResearch" required></textarea>
+                    <br><br>
+                    <label for="financial-preparation">Financial Preparation:</label>
+                    <textarea id="financial-preparation" rows="2" ng-model="trip.financialPreparation" required></textarea>
+                    <br><br>
+                    <label for="notes">Additional Notes:</label>
+                    <textarea id="notes" rows="4" ng-model="trip.notes"></textarea>
+                    <br><br>
+                    <button type="button" ng-click="nextTab()">Next</button>
+                </div>
+
+                <!-- Review Tab -->
+                <div class="tab-content" ng-class="{active: currentTab === 4}">
+                    <h3>Review Your Trip</h3>
+                    <p><strong>Trip Name:</strong> {{ trip.tripName }}</p>
+                    <p><strong>Destination:</strong> {{ trip.destination }}</p>
+                    <p><strong>Start Date:</strong> {{ trip.startDate }}</p>
+                    <p><strong>End Date:</strong> {{ trip.endDate }}</p>
+                    <p><strong>Budget:</strong> {{ trip.budget }}</p>
+                    <p><strong>Transportation:</strong> {{ trip.transportation }}</p>
+                    <p><strong>Accommodation:</strong> {{ trip.accommodation }}</p>
+                    <p><strong>Meal Preferences:</strong> {{ trip.meal }}</p>
+                    <p><strong>Travel Insurance:</strong> {{ trip.insurance ? 'Yes' : 'No' }}</p>
+                    <p><strong>Packing List:</strong> {{ trip.packing }}</p>
+                    <p><strong>Communication:</strong> {{ trip.communication }}</p>
+                    <p><strong>Local Research:</strong> {{ trip.localResearch }}</p>
+                    <p><strong>Financial Preparation:</strong> {{ trip.financialPreparation }}</p>
+                    <p><strong>Additional Notes:</strong> {{ trip.notes }}</p>
+                    <br><br>
+                    <button type="submit">Submit Trip</button>
+                    <button type="button" ng-click="previousTab()">Back</button>
+                </div>
+            </form>
+        </section>
+        <div id="trip-list">
+            <h3>Planned Trips</h3>
+            <ul id="trips">
+                <li ng-repeat="trip in trips">{{ trip.tripName }} - {{ trip.destination }} ({{ trip.startDate }} to {{ trip.endDate }}): {{ trip.notes }}</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Explorer's Weather Guide. All rights reserved.</p>
+    </footer>
+
+    <script>
+        angular.module('tripApp', [])
+            .controller('TripController', ['$scope', function($scope) {
+                $scope.currentTab = 1;
+                $scope.trip = {};
+                $scope.trips = [];
+
+                $scope.showTab = function(tabIndex) {
+                    $scope.currentTab = tabIndex;
+                    document.querySelectorAll('.tab-button').forEach((btn, index) => {
+                        btn.classList.toggle('active', index + 1 === tabIndex);
+                    });
+                };
+
+                $scope.nextTab = function() {
+                    if ($scope.currentTab < 4) {
+                        $scope.showTab($scope.currentTab + 1);
+                    }
+                };
+
+                $scope.previousTab = function() {
+                    if ($scope.currentTab > 1) {
+                        $scope.showTab($scope.currentTab - 1);
+                    }
+                };
+
+                $scope.submitForm = function() {
+                    $scope.trips.push(angular.copy($scope.trip));
+                    $scope.trip = {};
+                    $scope.showTab(1);
+                };
+            }]);
+    </script>
+</body>
+</html>
